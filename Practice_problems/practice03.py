@@ -14,7 +14,6 @@ Enter indices: 0 6
 # so the numbers at those position 10, 4 remained fixed
 # the rest are sorted in ascending order
 
-
 # uin
 n = int(input("Enter n: "))
 input_arr = input("").strip()
@@ -25,42 +24,25 @@ m = int(input("Enter m: "))
 indices_arr = input("Enter indices: ").strip()
 indices = []
 for entry in indices_arr.split(' '):
-    indices.append(int(entry))
-    array.remove(int(entry))
+    item = [int(entry), array[int(entry)]]
+    indices.append(item)
 
-# Check status
-# print(array)
-# print(indices)
-
-"""
-[1,4,3,2] ->
-[1,4,3,2] ->
-[1,3,4,2] ->
-[1,3,2,4] ->
-[1,3,2,4] ->
-[1,2,3,4] ->
-[1,2,3,4] ->
-[1,2,3,4]
-"""
+for entry in indices:
+    array.remove(entry[1])
 
 # preprocess
-def switch(arr, i, j):
-    if arr[i] > arr[j]:
-        exch = arr[i]
-        arr[i] = arr[j]
-        arr[j] = exch
-    return arr
-
-
-# process
 i = 0
-while i<len(array)-1:
-    
-    # Decide whether to switch the position with given index
-    array = switch(array, i, i+1)
-    
+while i < len(array)-1:
+    for j in range(0, len(array)-i-1):
+        if array[j] > array[j+1]:
+            exch = array[j+1]
+            array[j+1] = array[j]
+            array[j] = exch
     i += 1
 
-
+# process
+for index in indices:
+    array.insert(index[0], index[1])
 
 # sysout
+print(array)
